@@ -1,0 +1,47 @@
+[
+  {
+    "id": 23,
+    "prompt": "A video captures the majestic beauty of a mountain range, where the peaks are dusted with snow and the valleys are lush with greenery. The clouds, fluffy and white, are scattered across the sky, adding a sense of depth and dimension to the scene.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_id_to_filename_id23_generated.mp4"
+  },
+  {
+    "id": 78,
+    "prompt": "The video shows a beautiful girl with a powerful, confident stance at the peak of a mountain she has just climbed, looking out at the view. The style is triumphant and inspiring. The lighting is the clear, unfiltered light of high altitude. The overall impression is one of strength and achievement.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_second_id_to_filename_id78_generated.mp4"
+  },
+  {
+    "id": 126,
+    "prompt": "A rabbit hopping through a misty forest floor at dawn, its movements quiet and cautious. The style is atmospheric and mysterious, with the rabbit as a gentle guide through the scene. The lighting is the soft, diffused light of a foggy morning. The overall impression is one of magical, quiet exploration.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_second_id_to_filename_id126_generated.mp4"
+  },
+  {
+    "id": 267,
+    "prompt": "A video captures the process of pouring a liquid into a metal cup. The liquid appears to be a dark brown color, possibly a type of coffee or tea.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_id_to_filename_id267_generated.mp4"
+  },
+  {
+    "id": 287,
+    "prompt": "A video shows a man exploring a bustling, foreign marketplace, his face a mixture of curiosity and wonder. The style is adventurous and sensory. The lighting is a vibrant, chaotic mix of sunlight and stall lights. The overall impression is one of joyful cultural immersion.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_second_id_to_filename_id287_generated.mp4"
+  },
+  {
+    "id": 303,
+    "prompt": "A video shows a man's face breaking into a warm, genuine smile as he recognizes someone off-camera. The style is candid and heartwarming. The lighting is soft and natural. The overall impression is one of sudden, happy recognition.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_second_id_to_filename_id303_generated.mp4"
+  },
+  {
+    "id": 346,
+    "prompt": "A video shows massive, powerful ocean waves crashing against a dark, rugged cliff face, sending spray high into the air. The style is dramatic and awe-inspiring, emphasizing the raw power of the sea. The lighting is the moody, gray light of a stormy day. The overall impression is one of nature's untamable force.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_second_id_to_filename_id346_generated.mp4"
+  },
+  {
+    "id": 370,
+    "prompt": "A video shows a beautiful, intricate sea anemone, its tentacles waving gently in the current of a tide pool. The style is detailed and vibrant. The lighting is the clear, bright light of day. The overall impression is one of a living, breathing flower of the sea.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_second_id_to_filename_id370_generated.mp4"
+  },
+  {
+    "id": 430,
+    "prompt": "A video shows a baby's wide, fascinated eyes as they look up at a colorful mobile spinning above their crib. The style is wondrous and focused, capturing their developing senses. The lighting is soft and colorful, perhaps from the mobile itself. The overall impression is one of a whole new world opening up.",
+    "video_file_path": "pictures/t2v_cases/t2v_reduced_second_id_to_filename_id430_generated.mp4"
+  }
+]

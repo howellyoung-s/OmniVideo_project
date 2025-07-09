@@ -1,0 +1,62 @@
+[
+  {
+    "id": 3,
+    "prompt": "An image features a golden retriever playing in autumn leaves, tongue lolling. Crisp red and orange foliage blankets the ground, with a weathered wooden fence and distant misty mountains framing the scene.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_second_id_to_filename_id3_generated.png"
+  },
+  {
+    "id": 25,
+    "prompt": "An image depicts a dystopian, cyberpunk-inspired scene. In the foreground, a figure wearing an orange jacket with a blue and black helmet is standing, facing the viewer. The figure’s helmet is adorned with a blue circular element. The buildings exhibit a dilapidated appearance, with visible signs of wear and rust.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_id_to_filename_id25_generated.png"
+  },
+  {
+    "id": 38,
+    "prompt": "A volcanic springs steaming in Icelandic winters. Azure pools steam among obsidian rocks where snowflakes vanish near bubbling geothermal vents.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_second_id_to_filename_id38_generated.png"
+  },
+  {
+    "id": 44,
+    "prompt": "A biplane soaring above cotton-cumulus clouds. Ragtime echoes from propeller buzz over patchwork landscapes where toy windmills spin on distant hillsides.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_second_id_to_filename_id44_generated.png"
+  },
+  {
+    "id": 46,
+    "prompt": "An image captures a woman wearing sunglasses and a jacket, standing on a boat and smiling. She is wearing a backpack, which is located on her back. The boat is floating on a river, and the water is visible in the background.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_id_to_filename_id46_generated.png"
+  },
+  {
+    "id": 47,
+    "prompt": "Antarctic icebergs sculpted by polar winds. Azure caverns glow in monumental ice cliffs floating through silver seas where penguins porpoise through waves.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_second_id_to_filename_id47_generated.png"
+  },
+  {
+    "id": 47,
+    "prompt": "A futuristic image featuring a woman with glowing yellow eyes. She is wearing a black and gold outfit, which is adorned with intricate patterns and lights. The woman has long hair, and her eyes are prominently glowing yellow. She is the main focus of the scene.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_id_to_filename_id47_generated.png"
+  },
+  {
+    "id": 88,
+    "prompt": "An image that captures the essence of retro chic. At the center of the frame is a woman exuding a sense of confidence and style.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_id_to_filename_id88_generated.png"
+  },
+  {
+    "id": 100,
+    "prompt": "A volcanic springs steaming in Icelandic winters. Azure pools steam among obsidian rocks where snowflakes vanish near bubbling geothermal vents.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_second_id_to_filename_id100_generated.png"
+  },
+  {
+    "id": 259,
+    "prompt": "A black and white photograph of a serene mountain lake surrounded by trees. The mountain can be seen in the distance, towering over the lake. The reflection of the mountain and its snowy peak can be seen clearly in the calm waters of the lake.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_id_to_filename_id259_generated.png"
+  },
+  {
+    "id": 308,
+    "prompt": "A large, well-lit bedroom with a bed positioned towards the right side of the room. The bed is adorned with a gold comforter, giving it a luxurious appearance. The room also features a chair on the left side and another chair closer to the center of the room. The overall atmosphere of the bedroom is elegant and inviting.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_id_to_filename_id308_generated.png"
+  },
+  {
+    "id": 423,
+    "prompt": "A large elephant standing in a field with trees and bushes. The elephant is positioned near the center of the scene, surrounded by a variety of trees and bushes. Some of the trees have no leaves, while others have a mix of green and brown leaves. The elephant appears to be grazing or exploring the area, possibly searching for food.",
+    "video_file_path": "pictures/t2i_cases/t2i_reduced_id_to_filename_id423_generated.png"
+  }
+]

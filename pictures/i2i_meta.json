@@ -1,0 +1,50 @@
+[
+  {
+    "id": 366,
+    "video_path_src": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id366_source.jpg",
+    "prompt": "redesign this picture into tourism illustration",
+    "video_file_path": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id366_generated.png"
+  },
+  {
+    "id": 286,
+    "video_path_src": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id286_source.jpg",
+    "prompt": "Add a red flower to the center of the cactus plant.",
+    "video_file_path": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id286_generated.png"
+  },
+  {
+    "id": 270,
+    "video_path_src": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id270_source.jpg",
+    "prompt": "add color to the photo",
+    "video_file_path": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id270_generated.png"
+  },
+  {
+    "id": 94,
+    "video_path_src": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id94_source.jpg",
+    "prompt": "Wipe off the bird from the photo.",
+    "video_file_path": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id94_generated.png"
+  },
+  {
+    "id": 389,
+    "video_path_src": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id389_source.jpg",
+    "prompt": "change this photo into kyoto animation",
+    "video_file_path": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id389_generated.png"
+  },
+  {
+    "id": 69,
+    "video_path_src": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id69_source.jpg",
+    "prompt": "add more logs to the fire",
+    "video_file_path": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id69_generated.png"
+  },
+  {
+    "id": 348,
+    "video_path_src": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id348_source.jpg",
+    "prompt": "change the color of the water to turquoise",
+    "video_file_path": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id348_generated.png"
+  },
+  {
+    "id": 332,
+    "video_path_src": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id332_source.jpg",
+    "prompt": "change the color of the clouds to pink",
+    "video_file_path": "pictures/i2i_cases/i2i_reduced_second_id_to_filename_id332_generated.png"
+  }
+]

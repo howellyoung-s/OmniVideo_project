@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style></style
+  <meta name="description" content="A diffusion transformer model designed for generating videos from textual inputs">
+  <meta name="keywords" content="Text to Video, 3D Variational Autoencoder, window attention">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omni-Video: Democratizing Unified Video Understanding and Generation</title>
+
+
+
+  <link href="./Text_to_video/css" rel="stylesheet">
+
+  <link rel="stylesheet" href="./Text_to_video/bulma.min.css">
+  <link rel="stylesheet" href="./Text_to_video/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./Text_to_video/bulma-slider.min.css">
+  <link rel="stylesheet" href="./Text_to_video/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./Text_to_video/academicons.min.css">
+  <link rel="stylesheet" href="./Text_to_video/index.css">
+  <link rel="stylesheet" href="./Text_to_video/leaderboard.css">
+
+  <script type="text/javascript" src="./Text_to_video/sort-table.js" defer=""></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer="" src="./Text_to_video/fontawesome.all.min.js"></script>
+  <script src="./Text_to_video/bulma-carousel.min.js"></script>
+  <script src="./Text_to_video/bulma-slider.min.js"></script>
+  <script src="./Text_to_video/explorer-index.js"></script>
+  <script src="./Text_to_video/question_card.js"></script>
+
+  <script src="./Text_to_video/leaderboard_testmini.js"></script>  
+  <script src="./Text_to_video/output_folders.js" defer=""></script>
+  <script src="./Text_to_video/model_scores.js" defer=""></script>
+
+  <script src="./Text_to_video/data_public.js" defer=""></script>
+
+  <style>
+      .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin-top: -20px;
+        }
+    .node {
+      fill: #f8f1e4;
+      stroke: #000;
+      stroke-width: 1;
+      rx: 10;
+      ry: 10;
+    }
+    .node text {
+      font-size: 14px;
+      text-anchor: middle;
+    }
+    .link {
+      fill: none;
+      stroke: #000;
+      stroke-width: 2;
+    }
+    .badge {
+      font-size: 12px;
+    }
+
+    /* Enhanced styling for better visual appeal */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+      color: #334155;
+      padding: 4rem 0;
+      margin-top: 0;
+    }
+
+    .hero .title, .hero .subtitle {
+      color: #475569 !important;
+      text-shadow: none;
+    }
+
+    .hero .subtitle {
+      color: #64748b !important;
+    }
+
+    .publication-authors {
+      color: #64748b !important;
+    }
+
+    .publication-authors a {
+      color: #475569 !important;
+      text-decoration: none;
+    }
+
+    .publication-authors a:hover {
+      color: #334155 !important;
+      text-decoration: underline;
+    }
+
+    .section {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      padding: 3rem 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .section:nth-child(even) {
+      background: white;
+      color: #333;
+    }
+
+    .section:nth-child(even) .title {
+      color: #333 !important;
+    }
+
+    .section:nth-child(even) p {
+      color: #666 !important;
+    }
+
+    .section .title {
+      font-weight: 700;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .section .title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+
+    .section:nth-child(even) .title::after {
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+
+    .publication-links .button {
+      margin: 0.5rem;
+      border-radius: 50px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #64748b;
+      background: rgba(255, 255, 255, 0.9);
+      color: #475569;
+      backdrop-filter: blur(10px);
+    }
+
+    .publication-links .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(100, 116, 139, 0.2);
+      background: #64748b;
+      color: white;
+    }
+
+    video, img {
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    video:hover, img:hover {
+      transform: scale(1.02);
+      border-color: #667eea;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .columns {
+      margin-bottom: 2rem !important;
+    }
+
+    .column {
+      padding: 1rem;
+    }
+
+    .framework-image {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin: 2rem 0;
+    }
+
+    .results-grid {
+      background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 1rem 0;
+    }
+
+    .intro-section {
+      background: white;
+      color: #333;
+    }
+
+    .intro-section .title {
+      color: #333 !important;
+    }
+
+    .intro-section p {
+      color: #666 !important;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .video-section {
+      background: white;
+      color: #333;
+    }
+
+    .video-section .title {
+      color: #333 !important;
+    }
+
+    .video-section p {
+      color: #666 !important;
+    }
+
+    .editing-section {
+      background: white;
+      color: #333;
+    }
+
+    .editing-section .title {
+      color: #333 !important;
+    }
+
+    .editing-section p {
+      color: #666 !important;
+    }
+
+    .understanding-section {
+      background: white;
+      color: #333;
+    }
+
+    .understanding-section .title {
+      color: #333 !important;
+    }
+
+    .understanding-section p {
+      color: #666 !important;
+    }
+
+    .navbar {
+      display: none;
+    }
+
+    .content p {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .image-pair-container {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 0.5rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .prompt-text {
+      background: rgba(0,0,0,0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      backdrop-filter: blur(5px);
+    }
+
+    /* Special styling for Omni-Video title */
+    .omni-video-title {
+      background: linear-gradient(45deg, #c2410c, #ea580c, #f97316, #fb923c);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 4s ease infinite;
+      font-weight: 800;
+      text-shadow: 0 0 20px rgba(194, 65, 12, 0.4);
+      position: relative;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .omni-video-title::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, #c2410c, #ea580c, #f97316, #fb923c);
+      background-size: 300% 300%;
+      opacity: 0.08;
+      filter: blur(8px);
+      animation: gradient-shift 4s ease infinite;
+      z-index: -1;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        margin: 1rem;
+        padding: 2rem 1rem;
+      }
+      
+      .hero {
+        padding: 2rem 0;
+      }
+    }
+  </style>
+
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title is-bold" style="display: inline-block; margin-right: 0px;">
+            <span style="vertical-align: middle" class="omni-video-title">Omni-Video</span>
+            </h1>
+          <h2 class="subtitle is-2 publication-subtitle" style="display: inline-block; margin-left: 0px; color: #64748b !important; font-size: 2rem; font-weight: 600;">   
+            Democratizing Unified Video Understanding and Generation 
+          </h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="">Zhiyu Tan</a><sup style="">1,2†,</sup></span>
+            <span class="author-block">
+              <a href="">Hao Yang</a><sup style="">2†,</sup></span>
+            <span class="author-block">
+              <a href="">Luozheng Qin</a><sup style="">2,</sup></span>
+            <span class="author-block">
+              <a href="">Jia Gong</a><sup style="">2,</sup></span>
+            <span class="author-block">
+              <a href="">Mengping Yang</a><sup style="">2*,</sup></span>
+            <span class="author-block">
+              <a href="">Hao Li</a><sup style="">1,2*,</sup></span>
+            
+            
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block" style="margin-right: 15px;"><sup style="">1</sup>Fudan University,</span>
+            <span class="author-block" style="margin-right: 15px;"><sup style="">2</sup>Shanghai Academy of Artificial Intelligence for Science</span>
+            <span class="author-block" style="margin-right: 15px;"><sup style="">†</sup>Equal Contribution,</span>
+            <span class="author-block" style="margin-right: 15px;"><sup style="">*</sup>Corresponding Author</span>
+          </div>
+        
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2507.06119" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-alt"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/SAIS-FUXI/Omni-Video" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://sais-fuxi.github.io/Omni-Video/" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-robot"></i>
+                  </span>
+                  <span>HF Model</span>
+                </a>
+              </span> 
+              <!-- Visualization Link. -->
+              <!-- Leaderboard Link. -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section intro-section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Introduction</h2>
+        <div class="content has-text-justified">
+            <p>
+              Notable breakthroughs in unified understanding and generation modeling have led to remarkable advancements in image understanding, reasoning, production and editing, yet current foundational models predominantly focus on processing images, creating a gap in the development of unified models for video understanding and generation. This report presents Omni-Video, an efficient and effective unified framework for video understanding, generation, as well as instruction-based editing. Our key insight is to teach existing multimodal large language models (MLLMs) to produce continuous visual clues that are used as the input of diffusion decoders, which produce high-quality videos conditioned on these visual clues. To fully unlock the potential of our system for unified video modeling, we integrate several technical improvements: 1) a lightweight architectural design that respectively attaches a vision head on the top of MLLMs and a adapter before the input of diffusion decoders, the former produce visual tokens for the latter, which adapts these visual tokens to the conditional space of diffusion decoders; and 2) an efficient multi-stage training scheme that facilitates a fast connection between MLLMs and diffusion decoders with limited data and computational resources. We empirically demonstrate that our model exhibits satisfactory generalization abilities across video generation, editing and understanding tasks.
+            </p>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="columns is-centered framework-image" style="margin-bottom: 90px;">
+      <div class="content has-text-centered">
+        <img src="pictures/framework.png" alt="data-overview" style="max-width: 55%;">
+        <p> 
+          <b>Figure 1. Framework of Omni-Video</b> <br>
+        </p> 
+      </div>
+    </div>
+
+    <!--/ Abstract. -->
+
+</section>
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Text-to-Image Results</h2>
+
+        <!-- Image Row 1 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_second_id_to_filename_id3_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">An image features a golden retriever playing in autumn leaves, tongue lolling. Crisp red and orange foliage blankets the ground, with a weathered wooden fence and distant misty mountains framing the scene.</p>
+          </div>
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_id_to_filename_id25_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">An image depicts a dystopian, cyberpunk-inspired scene. In the foreground, a figure wearing an orange jacket with a blue and black helmet is standing, facing the viewer. The figure's helmet is adorned with a blue circular element. The buildings exhibit a dilapidated appearance, with visible signs of wear and rust.</p>
+          </div>
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_second_id_to_filename_id38_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A volcanic springs steaming in Icelandic winters. Azure pools steam among obsidian rocks where snowflakes vanish near bubbling geothermal vents.</p>
+          </div>
+        </div>
+
+        <!-- Image Row 2 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_second_id_to_filename_id44_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A biplane soaring above cotton-cumulus clouds. Ragtime echoes from propeller buzz over patchwork landscapes where toy windmills spin on distant hillsides.</p>
+          </div>
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_id_to_filename_id46_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">An image captures a woman wearing sunglasses and a jacket, standing on a boat and smiling. She is wearing a backpack, which is located on her back. The boat is floating on a river, and the water is visible in the background.</p>
+          </div>
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_second_id_to_filename_id47_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Antarctic icebergs sculpted by polar winds. Azure caverns glow in monumental ice cliffs floating through silver seas where penguins porpoise through waves.</p>
+          </div>
+        </div>
+
+        <!-- Image Row 3 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_id_to_filename_id47_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A futuristic image featuring a woman with glowing yellow eyes. She is wearing a black and gold outfit, which is adorned with intricate patterns and lights. The woman has long hair, and her eyes are prominently glowing yellow. She is the main focus of the scene.</p>
+          </div>
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_id_to_filename_id88_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">An image that captures the essence of retro chic. At the center of the frame is a woman exuding a sense of confidence and style.</p>
+          </div>
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_second_id_to_filename_id100_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A volcanic springs steaming in Icelandic winters. Azure pools steam among obsidian rocks where snowflakes vanish near bubbling geothermal vents.</p>
+          </div>
+        </div>
+
+        <!-- Image Row 4 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_id_to_filename_id259_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A black and white photograph of a serene mountain lake surrounded by trees. The mountain can be seen in the distance, towering over the lake. The reflection of the mountain and its snowy peak can be seen clearly in the calm waters of the lake.</p>
+          </div>
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_id_to_filename_id308_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A large, well-lit bedroom with a bed positioned towards the right side of the room. The bed is adorned with a gold comforter, giving it a luxurious appearance. The room also features a chair on the left side and another chair closer to the center of the room. The overall atmosphere of the bedroom is elegant and inviting.</p>
+          </div>
+          <div class="column is-one-third">
+            <img src="./pictures/t2i_cases/t2i_reduced_id_to_filename_id423_generated.png" alt="Generated Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A large elephant standing in a field with trees and bushes. The elephant is positioned near the center of the scene, surrounded by a variety of trees and bushes. Some of the trees have no leaves, while others have a mix of green and brown leaves. The elephant appears to be grazing or exploring the area, possibly searching for food.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section video-section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column" style="width: 90%;">
+        <h2 class="title is-3">Text-to-Video Results</h2>
+
+        <!-- Video Row 1 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_id_to_filename_id23_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A video captures the majestic beauty of a mountain range, where the peaks are dusted with snow and the valleys are lush with greenery. The clouds, fluffy and white, are scattered across the sky, adding a sense of depth and dimension to the scene.</p>
+          </div>
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_second_id_to_filename_id78_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A beautiful girl with a powerful, confident stance at the peak of a mountain she has just climbed, looking out at the view. The style is triumphant and inspiring. The lighting is the clear, unfiltered light of high altitude. The overall impression is one of strength and achievement.</p>
+          </div>
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_second_id_to_filename_id126_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A rabbit hopping through a misty forest floor at dawn, its movements quiet and cautious. The style is atmospheric and mysterious, with the rabbit as a gentle guide through the scene. The lighting is the soft, diffused light of a foggy morning. The overall impression is one of magical, quiet exploration.</p>
+          </div>
+        </div>
+
+        <!-- Video Row 2 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_id_to_filename_id267_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A video captures the process of pouring a liquid into a metal cup. The liquid appears to be a dark brown color, possibly a type of coffee or tea.</p>
+          </div>
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_second_id_to_filename_id287_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A video shows a man exploring a bustling, foreign marketplace, his face a mixture of curiosity and wonder. The style is adventurous and sensory. The lighting is a vibrant, chaotic mix of sunlight and stall lights. The overall impression is one of joyful cultural immersion.</p>
+          </div>
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_second_id_to_filename_id303_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A video shows a man's face breaking into a warm, genuine smile as he recognizes someone off-camera. The style is candid and heartwarming. The lighting is soft and natural. The overall impression is one of sudden, happy recognition.</p>
+          </div>
+        </div>
+
+        <!-- Video Row 3 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_second_id_to_filename_id346_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A video shows massive, powerful ocean waves crashing against a dark, rugged cliff face, sending spray high into the air. The style is dramatic and awe-inspiring, emphasizing the raw power of the sea. The lighting is the moody, gray light of a stormy day. The overall impression is one of nature's untamable force.</p>
+          </div>
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_second_id_to_filename_id370_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A video shows a beautiful, intricate sea anemone, its tentacles waving gently in the current of a tide pool. The style is detailed and vibrant. The lighting is the clear, bright light of day. The overall impression is one of a living, breathing flower of the sea.</p>
+          </div>
+          <div class="column is-one-third">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/t2v_cases/t2v_reduced_second_id_to_filename_id430_generated.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">A video shows a baby's wide, fascinated eyes as they look up at a colorful mobile spinning above their crib. The style is wondrous and focused, capturing their developing senses. The lighting is soft and colorful, perhaps from the mobile itself. The overall impression is one of a whole new world opening up.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section editing-section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column" style="width: 90%;">
+        <h2 class="title is-3">Video Editing Results</h2>
+
+        <!-- Video Editing Row 1 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-half">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/v2v_cases/concat_0.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Add a sea.</p>
+          </div>
+          <div class="column is-half">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/v2v_cases/concat_1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Add a hat.</p>
+          </div>
+        </div>
+
+        <!-- Video Editing Row 2 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-half">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/v2v_cases/concat_2.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Add a hat.</p>
+          </div>
+          <div class="column is-half">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/v2v_cases/concat_3.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Turn the mountain into trees.</p>
+          </div>
+        </div>
+
+        <!-- Video Editing Row 3 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <div class="column is-half">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/v2v_cases/concat_4.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Discard the path.</p>
+          </div>
+          <div class="column is-half">
+            <video controls style="width: 100%; border-radius: 8px;">
+              <source src="./pictures/v2v_cases/concat_5.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Eliminate the man.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section editing-section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column" style="width: 90%;">
+        <h2 class="title is-3">Image Editing Results</h2>
+
+        <!-- Image Editing Row 1 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <!-- Pair 1 -->
+          <div class="column is-half">
+            <div class="columns is-gapless image-pair-container">
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id366_source.jpg" alt="Source Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Source</p>
+              </div>
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id366_generated.png" alt="Edited Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Edited</p>
+              </div>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Redesign this picture into tourism illustration</p>
+          </div>
+          <!-- Pair 2 -->
+          <div class="column is-half">
+            <div class="columns is-gapless">
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id286_source.jpg" alt="Source Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Source</p>
+              </div>
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id286_generated.png" alt="Edited Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Edited</p>
+              </div>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Add a red flower to the center of the cactus plant.</p>
+          </div>
+        </div>
+
+        <!-- Image Editing Row 2 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <!-- Pair 3 -->
+          <div class="column is-half">
+            <div class="columns is-gapless">
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id270_source.jpg" alt="Source Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Source</p>
+              </div>
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id270_generated.png" alt="Edited Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Edited</p>
+              </div>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Add color to the photo</p>
+          </div>
+          <!-- Pair 4 -->
+          <div class="column is-half">
+            <div class="columns is-gapless">
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id94_source.jpg" alt="Source Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Source</p>
+              </div>
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id94_generated.png" alt="Edited Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Edited</p>
+              </div>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Wipe off the bird from the photo.</p>
+          </div>
+        </div>
+
+        <!-- Image Editing Row 3 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <!-- Pair 5 -->
+          <div class="column is-half">
+            <div class="columns is-gapless">
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id389_source.jpg" alt="Source Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Source</p>
+              </div>
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id389_generated.png" alt="Edited Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Edited</p>
+              </div>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Change this photo into kyoto animation</p>
+          </div>
+          <!-- Pair 6 -->
+          <div class="column is-half">
+            <div class="columns is-gapless">
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id69_source.jpg" alt="Source Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Source</p>
+              </div>
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id69_generated.png" alt="Edited Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Edited</p>
+              </div>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Add more logs to the fire</p>
+          </div>
+        </div>
+
+        <!-- Image Editing Row 4 -->
+        <div class="columns is-vcentered" style="margin-bottom: 30px; align-items: flex-start;">
+          <!-- Pair 7 -->
+          <div class="column is-half">
+            <div class="columns is-gapless">
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id348_source.jpg" alt="Source Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Source</p>
+              </div>
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id348_generated.png" alt="Edited Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Edited</p>
+              </div>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Change the color of the water to turquoise</p>
+          </div>
+          <!-- Pair 8 -->
+          <div class="column is-half">
+            <div class="columns is-gapless">
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id332_source.jpg" alt="Source Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Source</p>
+              </div>
+              <div class="column is-half">
+                <img src="./pictures/i2i_cases/i2i_reduced_second_id_to_filename_id332_generated.png" alt="Edited Image" style="width: 100%; object-fit: contain; border-radius: 8px;">
+                <p class="has-text-centered" style="margin-top: 5px; font-size: 0.8em; color: #999;">Edited</p>
+              </div>
+            </div>
+            <p class="has-text-centered" style="margin-top: 10px; font-size: 0.9em; color: #666;">Change the color of the clouds to pink</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section understanding-section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column" style="width: 90%;">
+        <h2 class="title is-3">Video Understanding Results</h2>
+
+        <!-- Video Understanding Content -->
+        <div class="columns is-centered" style="margin-bottom: 30px;">
+          <div class="column is-four-fifths">
+            <img src="./pictures/video_understanding.png" alt="Video Understanding Results" style="width: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <p class="has-text-centered" style="margin-top: 15px; font-size: 1em; color: #666;">Omni-Video demonstrates advanced video understanding capabilities, providing detailed analysis and interpretation of video content through multimodal large language models.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section understanding-section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column" style="width: 90%;">
+        <h2 class="title is-3">Think Mode Results</h2>
+
+        <!-- Think Mode Content -->
+        <div class="columns is-centered" style="margin-bottom: 30px;">
+          <div class="column is-four-fifths">
+            <img src="./pictures/think_mode.png" alt="Think Mode Results" style="width: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <p class="has-text-centered" style="margin-top: 15px; font-size: 1em; color: #666;">Omni-Video's think mode enables sophisticated reasoning and step-by-step analysis for complex video and image understanding tasks, demonstrating advanced cognitive capabilities in multimodal AI.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</div></div></section>
+
+
+</body></html>

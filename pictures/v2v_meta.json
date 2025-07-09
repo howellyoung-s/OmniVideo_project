@@ -1,0 +1,32 @@
+[
+    {
+        "id": 0,
+        "prompt": "Add a sea.",
+        "video_file_path": "pictures/v2v_cases/concat_0.mp4"
+    },
+    {
+        "id": 1,
+        "prompt": "Add a hat.",
+        "video_file_path": "pictures/v2v_cases/concat_1.mp4"
+    },
+    {
+        "id": 2,
+        "prompt": "Add a hat.",
+        "video_file_path": "pictures/v2v_cases/concat_2.mp4"
+    },
+    {
+        "id": 3,
+        "prompt": "Turn the mountain into trees.",
+        "video_file_path": "pictures/v2v_cases/concat_3.mp4"
+    },
+    {
+        "id": 4,
+        "prompt": "Discard the path.",
+        "video_file_path": "pictures/v2v_cases/concat_4.mp4"
+    },
+    {
+        "id": 5,
+        "prompt": "Eliminate the man.",
+        "video_file_path": "pictures/v2v_cases/concat_5.mp4"
+    }
+]
