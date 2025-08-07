@@ -1,0 +1,32 @@
+[
+    {
+        "id": 0,
+        "prompt": "add a person sitting on a bench",
+        "video_file_path": "pictures/v2v_cases_2/v2v_demo_0.mp4"
+    },
+    {
+        "id": 1,
+        "prompt": "replace the panda with a human",
+        "video_file_path": "pictures/v2v_cases_2/v2v_demo_1.mp4"
+    },
+    {
+        "id": 2,
+        "prompt": "replace the boat with a yacht",
+        "video_file_path": "pictures/v2v_cases_2/v2v_demo_2.mp4"
+    },
+    {
+        "id": 3,
+        "prompt": "replace the kite with a bird",
+        "video_file_path": "pictures/v2v_cases_2/v2v_demo_3.mp4"
+    },
+    {
+        "id": 4,
+        "prompt": "change the skier's jacket from green to yellow",
+        "video_file_path": "pictures/v2v_cases_2/v2v_demo_4.mp4"
+    },
+    {
+        "id": 5,
+        "prompt": "add a hot air balloon floating above the clouds",
+        "video_file_path": "pictures/v2v_cases_2/v2v_demo_5.mp4"
+    }
+] 
